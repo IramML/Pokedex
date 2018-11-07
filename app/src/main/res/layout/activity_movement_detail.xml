@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".Activities.MovementDetailActivity"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal">
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="4dp"
+            android:background="@color/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light"
+            app:title="@string/toolbar_movement"/>
+    <TextView
+            android:id="@+id/tvMovement"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Viento de afeitar" android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textStyle="bold" android:textColor="#000"/>
+    <TextView
+            android:id="@+id/tvType"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tipo: normal" android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAllCaps="false" android:textColor="#000"/>
+    <TextView
+            android:id="@+id/tvDescription"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Inflige daño regular. La tasa de golpe crítico del usuario es un nivel más alto cuando se usa este movimiento. El usuario cobra por un turno antes de atacar.
+
+Este movimiento no se puede seleccionar con el modo de conversación de reposo."
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:textColor="#000"
+            android:fontFamily="sans-serif"/>
+</LinearLayout>
