@@ -13,7 +13,9 @@ import com.example.iram.check_ins.RecyclerViewMovements.ClickListener
 import com.example.iram.check_ins.RecyclerViewMovements.customAdapter
 import com.google.gson.Gson
 import com.iramml.pokedex.Common.Common
+import com.iramml.pokedex.Fragments.BottomSheetMovementFragment
 import com.iramml.pokedex.Interfaces.HttpRequest
+import com.iramml.pokedex.Model.MovementsResponse
 import com.iramml.pokedex.Model.PokemonResponse
 import com.iramml.pokedex.R
 import com.iramml.pokedex.Util.Network
@@ -23,12 +25,16 @@ class PokemonDetailActivity : AppCompatActivity() {
     var network:Network?=null
     var adapter:customAdapter?=null
     var layoutManager:RecyclerView.LayoutManager?=null
+    var activity:AppCompatActivity=this
 
     var toolbar: Toolbar?=null
     var ivSpritePokemon:ImageView?=null
     var tvName:TextView?=null
     var tvType:TextView?=null
+    var tvMovTxT:TextView?=null
     var listMovements:RecyclerView?=null
+
+    var bottomSheetRiderFragment: BottomSheetMovementFragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokemon_detail)
@@ -64,8 +70,13 @@ class PokemonDetailActivity : AppCompatActivity() {
                 type+="${objectResponse.types[i].type.name}, "
         }
         tvType?.text=type
+
+        tvMovTxT=findViewById(R.id.tvMovTxt)
+        tvMovTxT?.text=resources.getString(R.string.movements)
+
         ivSpritePokemon=findViewById(R.id.ivSpritePokemon)
         Picasso.get().load("${Common.BASE_URL_SPRITES}PokeAPI/sprites/master/sprites/pokemon/${objectResponse?.id}.png").into(ivSpritePokemon)
+        bottomSheetRiderFragment= BottomSheetMovementFragment().newInstance("Movement bottom sheet")
     }
 
     fun initToolbar(){
@@ -77,7 +88,13 @@ class PokemonDetailActivity : AppCompatActivity() {
     fun implementRecyclerView(objectResponse:PokemonResponse){
         adapter= customAdapter(objectResponse?.moves, object: ClickListener{
             override fun onClick(view: View, index: Int) {
-
+                bottomSheetRiderFragment?.show(getSupportFragmentManager(), bottomSheetRiderFragment?.getTag())
+                network?.httpRequest(objectResponse.moves[index].move.url, object: HttpRequest{
+                    override fun httpResponseSuccess(response: String) {
+                        val gson=Gson()
+                        bottomSheetRiderFragment?.getData(gson.fromJson(response, MovementsResponse::class.java))
+                    }
+                })
             }
         })
         listMovements?.adapter=adapter
