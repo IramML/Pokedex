@@ -1,5 +1,6 @@
 package com.iramml.pokedex.Activities
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
@@ -13,15 +14,16 @@ import com.iramml.pokedex.Util.Network
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.example.iram.check_ins.RecyclerViewMain.ClickListener
-import com.example.iram.check_ins.RecyclerViewMain.LongClickListener
 import com.example.iram.check_ins.RecyclerViewMain.customAdapter
-import com.iramml.pokedex.Model.Results
 
 
 class PokemonsActivity : AppCompatActivity() {
     var network:Network?=null
     var listPokemons:RecyclerView?=null
     var adapterList:customAdapter?=null
+    companion object {
+        val KEY_URL="com.iramml.pokedex.Activities.url"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pokemons)
@@ -34,9 +36,7 @@ class PokemonsActivity : AppCompatActivity() {
         listPokemons=findViewById(R.id.listPokemons)
         listPokemons?.setHasFixedSize(true)
         listPokemons?.setLayoutManager(GridLayoutManager(this, 3))
-        /*layoutManager= LinearLayoutManager(view0?.context)
-        listItems?.layoutManager=layoutManager
-        */
+
     }
     fun getPokemons(){
         var url="${Common.BASE_URL}/api/v2/pokemon/"
@@ -55,11 +55,9 @@ class PokemonsActivity : AppCompatActivity() {
     fun implementRecyclerView(responseObject:PokemonsResponse){
         adapterList= customAdapter(responseObject.results, object :ClickListener{
             override fun onClick(view: View, index: Int) {
-
-            }
-
-        }, object:LongClickListener{
-            override fun longClick(view: View, index: Int) {
+                val intent= Intent(applicationContext, PokemonDetailActivity::class.java)
+                intent.putExtra(KEY_URL, responseObject.results[index].url)
+                startActivity(intent)
             }
         })
         listPokemons?.adapter=adapterList

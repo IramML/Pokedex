@@ -3,4 +3,5 @@
     <string name="toolbar_pokedex">Pokedex</string>
     <string name="toolbar_pokemon">Pokemon</string>
     <string name="toolbar_movement">Movement</string>
+    <string name="movements">Movements</string>
 </resources>
