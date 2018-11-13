@@ -56,6 +56,7 @@ class PokemonsActivity : AppCompatActivity() {
         adapterList= customAdapter(responseObject.results, object :ClickListener{
             override fun onClick(view: View, index: Int) {
                 val intent= Intent(applicationContext, PokemonDetailActivity::class.java)
+                Log.d("URL_ACTIVITY", responseObject.results[index].url)
                 intent.putExtra(KEY_URL, responseObject.results[index].url)
                 startActivity(intent)
             }

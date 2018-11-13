@@ -41,8 +41,10 @@ class PokemonDetailActivity : AppCompatActivity() {
         initToolbar()
         network= Network(this)
         val url=intent.getStringExtra(PokemonsActivity.KEY_URL)
+        Log.d("URL_HTTP_R", url)
         network?.httpRequest(url, object: HttpRequest{
             override fun httpResponseSuccess(response: String) {
+                Log.d("HTTP_RESPONSE_MOV", response)
                 val gson=Gson()
                 var objectResponse=gson.fromJson(response, PokemonResponse::class.java)
                 initViews(objectResponse)
