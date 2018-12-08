@@ -17,8 +17,10 @@ class customAdapter(items: ArrayList<Results>, var listener: ClickListener) : Re
     var itemsSelected: ArrayList<Int>
     var viewHolder: ViewHolder?=null
     var items: ArrayList<Results>?=null
+    var copiaItem:ArrayList<Results>?=null
     init {
-        this.items=items
+        this.items= ArrayList(items)
+        this.copiaItem=items
         itemsSelected = ArrayList()
     }
 
@@ -36,6 +38,24 @@ class customAdapter(items: ArrayList<Results>, var listener: ClickListener) : Re
     }
     override fun getItemCount(): Int {
         return items?.count()!!
+    }
+    fun filter(str:String){
+        items?.clear()
+
+        if (str.isNullOrEmpty()){
+            items=ArrayList(copiaItem)
+            notifyDataSetChanged()
+            return
+        }
+        var busqueda=str
+        busqueda=busqueda.toLowerCase()
+        for (item in copiaItem!!){
+            val nombre=item.name.toLowerCase()
+            if (nombre.contains(busqueda)){
+                items?.add(item)
+            }
+        }
+        notifyDataSetChanged()
     }
     class ViewHolder(itemView: View, listener:ClickListener) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
         var tvName: TextView?=null
